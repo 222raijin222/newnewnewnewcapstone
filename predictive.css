@@ -1,0 +1,171 @@
+/* 🌤️ Weather Forecast Container */
+.weather-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 900px;
+  margin: 40px auto;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+/* Soft blue background for page */
+body {
+  background-color: #8eb8e5; /* Soft weather blue */
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header Title */
+.weather-card h2 {
+  color: #0b3c8d;
+  font-weight: 700;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Subtitle */
+.weather-card h4 {
+  color: #555;
+  font-weight: 500;
+  margin-bottom: 25px;
+}
+
+/* Chart Container */
+.chart-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+
+/* Legend Style (optional if using Chart.js legend inside) */
+.legend-box {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #333;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+}
+
+/* Hover effect */
+.weather-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ===== Weather Forecast Graph Container ===== */
+.graph-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #f7f9fc;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+.graph-container:hover {
+  transform: translateY(-4px);
+}
+.graph-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1d3b71;
+  font-weight: 600;
+}
+
+/* ===== Modal for Weather Risk Details ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.modal-content {
+  background: #ffffff;
+  padding: 25px 30px;
+  border-radius: 16px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  animation: zoomIn 0.3s ease forwards;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #1d3b71;
+  text-align: center;
+}
+
+.close-btn {
+  float: right;
+  cursor: pointer;
+  color: #666;
+  font-size: 24px;
+  transition: color 0.2s ease;
+}
+.close-btn:hover {
+  color: #ff4d4f;
+}
+
+/* ===== Risk Items Inside Modal ===== */
+.risk-item {
+  margin: 10px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+.risk-item span {
+  font-weight: 600;
+  color: #1d3b71;
+}
+
+/* ===== Responsive Charts ===== */
+@media (max-width: 768px) {
+  .graph-container {
+    padding: 20px;
+  }
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+}
