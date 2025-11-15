@@ -417,19 +417,7 @@ body {
                     </div>
                     
 
-                    <!-- Position Information Section -->
-                    <div class="section-header">Position Information</div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Start term</label>
-                            <input type="date" name="start_term" value="<?php echo htmlspecialchars($user['start_term'] ?? ''); ?>">
-                        </div>
-                        <div class="form-group">
-                            <label>End term</label>
-                            <input type="date" name="end_term" value="<?php echo htmlspecialchars($user['end_term'] ?? ''); ?>">
-                        </div>
-                    </div>
 
                     <div style="display:flex; gap:10px; margin-top:24px;">
                         <button type="reset" class="btn-update" style="background:#f5f5f5; color:#333; border:1px solid #e4e7ec;">Cancel</button>
