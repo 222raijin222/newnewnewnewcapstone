@@ -221,16 +221,18 @@ echo "<script>alert('✅ Census form submitted successfully!'); window.location.
 <body>
 
 <!-- 🔙 Back Button -->
-<button type="button" 
-                onclick="window.location.href='dashboard.php';"  
-                style="background-color:#1d3b71; 
-                color:white; 
-                border:none; 
-                padding:10px 20px; 
-                border-radius:4px; 
-                cursor:pointer;">
-            ← Back to Dashboard
-        </button>
+<div style="margin: 0px;">
+    <button type="button" 
+            onclick="window.location.href='resident.php';"  
+            style="background-color:#1d3b71; 
+            color:white; 
+            border:none; 
+            padding:10px 20px; 
+            border-radius:4px; 
+            cursor:pointer;">
+        ← Go to main page
+    </button>
+</div> 
 
 <div class="container">
     <form class="census-form" method="POST" action="">

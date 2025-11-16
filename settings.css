@@ -1,0 +1,374 @@
+/* =======================================================
+   SETTINGS PAGE (CLEAN + ALIGNED TO settings.php)
+======================================================= */
+
+/* ===== Variables ===== */
+:root {
+    --sidebar-width: 250px;
+    --primary-blue: #1d3b71;
+    --dark-blue: #16325c;
+    --dark-color: #2c3e50;
+    --white: #ffffff;
+    --light-blue: #7da2ce;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-600: #6c757d;
+    --gray-medium: #ced4da;
+    --danger-color: #e74c3c;
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-btn {
+  display: inline-block;
+  padding: 8px 15px;
+  background-color: var(--primary-blue);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.logout-btn {
+  display: inline-block;
+  padding: 8px 15px;
+  background-color: var(--danger-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+/* ===== Updated Sidebar Styles ===== */
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--dark-color);
+  color: var(--white);
+  padding: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.sidebar-header {
+  padding: 20px;
+  background-color: var(--dark-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-header h1 {
+  display: flex;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 5px;
+}
+
+.sidebar-header h2 {
+  font-size: 1.1rem;
+  margin: 10px 0;
+  color: var(--white);
+  font-weight: normal;
+  line-height: 1.4;
+}
+
+.sidebar-nav ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  margin-top: 10px;
+}
+
+.sidebar-nav a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.sidebar-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-nav a.active {
+  background-color: #2a4163;
+  font-weight: bold;
+  border-left: 4px solid var(--primary-blue);
+  padding-left: 16px;
+}
+
+.sidebar-nav i {
+  margin-right: 10px;
+  width: 18px;
+  text-align: center;
+}
+
+/* ===== Settings Container ===== */
+.settings-container {
+    display: flex;
+    gap: 32px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    padding: 25px;
+    flex-wrap: wrap;
+}
+
+/* ===== Left Settings Sidebar ===== */
+/* --- Profile Progress --- */
+.profile-progress {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-progress svg {
+    transform: rotate(-90deg);
+}
+
+.profile-progress p {
+    margin: 10px 0;
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+.btn-complete {
+    background: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-complete:hover {
+    background: var(--dark-blue);
+}
+
+/* --- Dropdown Buttons --- */
+.dropdown-toggle {
+    width: 100%;
+    background: #f5f6fa;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.dropdown-toggle:hover,
+.dropdown-toggle.active {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+.dropdown-section {
+    display: none;
+    margin-top: 15px;
+}
+
+.dropdown-section.active {
+    display: block;
+}
+
+/* ===== Right Settings Content ===== */
+.settings-content {
+    flex: 2;
+    padding-left: 20px;
+}
+
+/* --- Header --- */
+.settings-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.settings-header img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid var(--primary-blue);
+    object-fit: cover;
+}
+
+.settings-header h2 {
+    font-size: 18px;
+    margin: 0;
+    color: var(--dark-color);
+}
+
+/* ===== Forms ===== */
+.settings-form .form-group {
+    margin-bottom: 20px;
+}
+
+.settings-form label {
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.settings-form input,
+.settings-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--gray-medium);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--white);
+    transition: border-color 0.3s ease;
+}
+
+.settings-form input:focus,
+.settings-form select:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+}
+
+/* --- Form Rows --- */
+.form-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    flex: 100%;
+}
+
+/* ===== Buttons ===== */
+.btn-update,
+.btn-danger {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-update {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+.btn-update:hover {
+    background: var(--dark-blue);
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background: var(--danger-color);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
+}
+
+/* ===== Alerts ===== */
+.alert {
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #e74c3c;
+}
+
+/* ===== Danger Zone ===== */
+.danger-zone {
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid var(--gray-medium);
+}
+
+.danger-zone h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: var(--danger-color);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+    .settings-container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .settings-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--gray-medium);
+        padding-bottom: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+}

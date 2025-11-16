@@ -13,6 +13,11 @@ $userId = $user['id'] ?? $user['user_id'] ?? null;
 $full_name = $user['full_name'] ?? 'User';
 $message = "";
 
+// Define the missing variables
+$is_logged_in = isLoggedIn();
+$user_role = $user['role'] ?? '';
+$user_barangay_name = $user['barangay_name'] ?? '';
+
 // Check if user is super admin
 $is_super_admin = false;
 if (isset($user['role']) && $user['role'] === 'super_admin') {
@@ -133,6 +138,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <style>
 :root {
     --light-blue: #7da2ce;
+      --danger-color: #e74c3c;
+        --accent-color: #e74c3c;
+          --dark-color: #2c3e50;
+
+
+
 }
 body {
     background-color: var(--light-blue);
@@ -140,6 +151,10 @@ body {
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
+}
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
 }
 .main-content {
     flex: 1;
@@ -284,51 +299,235 @@ body {
 .form-section {
     margin-bottom: 25px;
 }
-@media (max-width: 900px) {
-    .dashboard-container {
-        flex-direction: column;
-    }
-    .sidebar {
-        width: 100%;
-    }
-    .settings-content {
-        padding: 30px 20px;
-        min-width: 0;
-        max-width: 100%;
-    }
-    .form-row {
-        flex-direction: column;
-        gap: 0;
-    }
+
+/* =========================================================
+   MOBILE RESPONSIVE STYLES (phones & small screens)
+   Applies only at max-width: 768px
+========================================================= */
+@media (max-width: 768px) {
+  /* -----------------------------------------
+     Layout Adjustments
+  ----------------------------------------- */
+  .sidebar {
+    position: fixed;
+    width: 200px;
+    left: -200px;
+    transition: left 0.3s ease-in-out;
+    z-index: 9999;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 15px;
+    width: 100%;
+  }
+
+  /* Hamburger Menu */
+  .mobile-menu-btn {
+    display: inline-block;
+    font-size: 26px;
+    cursor: pointer;
+    color: var(--dark-color);
+    margin-right: 15px;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 10000;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.2rem;
+  }
+
+  /* -----------------------------------------
+     Settings Content
+  ----------------------------------------- */
+  .settings-content {
+    padding: 30px 20px !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin-top: 50px;
+  }
+
+  .form-row {
+    flex-direction: column !important;
+    gap: 0 !important;
+  }
+
+  .settings-tabs {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .tab-btn {
+    text-align: center;
+  }
+
+  /* -----------------------------------------
+     Sidebar Navigation Links
+  ----------------------------------------- */
+  .sidebar-nav a {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+  }
+
+  .sidebar-header h2 {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  /* -----------------------------------------
+     Responsive Text & Utility
+  ----------------------------------------- */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-size: 90%;
+  }
+
+  .welcome {
+    font-size: 0.9rem;
+  }
+}
+
+/* =========================================================
+   EXTRA SMALL DEVICES (very small phones)
+========================================================= */
+@media (max-width: 480px) {
+  .settings-content {
+    padding: 20px 15px !important;
+  }
+
+  .settings-content h2 {
+    font-size: 1.4rem;
+  }
+
+  .sidebar {
+    width: 180px;
+    left: -180px;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .mobile-menu-btn {
+    font-size: 22px;
+    padding: 6px 10px;
+  }
+
+  .btn-update {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Sidebar Styles */
+.sidebar-header {
+
+    text-align: left;
+    
+}
+
+.sidebar-header h2 {
+    
+    color: white;
+}
+
+.welcome {
+    text-align: left;
+}
+
+
+
+.logout-btn, .login-btn {
+    display: inline-block;
+    background: var(--accent-color);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.logout-btn:hover, .login-btn:hover {
+    background: var(--danger-color);
+}
+
+
+
+/* Mobile Overlay */
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+}
+
+.mobile-overlay.active {
+    display: block;
 }
 </style>
 </head>
 <body>
 <div class="dashboard-container">
 
+    <!-- Mobile Menu Button -->
+    <div class="mobile-menu-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" onclick="toggleSidebar()"></div>
+
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
             <h2>Barangay Event And Program Planning System</h2>
-            <div class="welcome">
-                <p>Welcome, <?php echo htmlspecialchars($full_name); ?></p>
-                <a href="logout.php" class="logout-btn">Logout</a>
-            </div>
+            <?php if ($is_logged_in): ?>
+                <div class="welcome">
+                    <p>Welcome, <?php echo htmlspecialchars($_SESSION['user']['full_name'] ?? 'User'); ?></p>
+                    <?php if ($user_role === 'captain' && $user_barangay_name): ?>
+                        <p><small><?php echo htmlspecialchars($user_barangay_name); ?></small></p>
+                    <?php endif; ?>
+                    <a href="logout.php" class="logout-btn">Logout</a>
+                </div>
+            <?php else: ?>
+                <div class="welcome">
+                    <a href="login.php" class="login-btn">Login</a>
+                </div>
+            <?php endif; ?>
         </div>
+
         <nav class="sidebar-nav">
             <ul>
-                <li><a href="dashboard.php"><i class="fas fa-house-user"></i> Dashboard</a></li>
-                <li><a href="resident.php"><i class="fas fa-users"></i> Residents</a></li>
-                <li><a href="analytics.php"><i class="fas fa-chart-bar"></i> Analytics</a></li>
-                <li><a href="predictive.php"><i class="fas fa-brain"></i> Predictive Models</a></li>
-               
+               <li><a href="dashboard.php" class="<?php echo basename($_SERVER['PHP_SELF']) === 'dashboard.php' ? 'active' : ''; ?>"><i class="fas fa-house-user"></i> Dashboard</a></li>
+                <li><a href="resident.php" class="<?php echo basename($_SERVER['PHP_SELF']) === 'resident.php' ? 'active' : ''; ?>"><i class="fas fa-users"></i> Residents</a></li>
+                <li><a href="analytics.php" class="<?php echo basename($_SERVER['PHP_SELF']) === 'analytics.php' ? 'active' : ''; ?>"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li><a href="predictive.php" class="<?php echo basename($_SERVER['PHP_SELF']) === 'predictive.php' ? 'active' : ''; ?>"><i class="fas fa-brain"></i> Predictive Models</a></li>
                 
                 <!-- Super Admin Only Links -->
                 <?php if ($is_super_admin): ?>
-                    <li><a href="superadmin.php"><i class="fas fa-inbox"></i> Requests</a></li>
+                    <li><a href="superadmin.php" class="<?php echo basename($_SERVER['PHP_SELF']) === 'superadmin.php' ? 'active' : ''; ?>"><i class="fas fa-inbox"></i> Requests</a></li>
                 <?php endif; ?>
                 
-                <li><a href="settings.php" class="active"><i class="fas fa-cog"></i> Settings</a></li>
+                <?php if ($is_logged_in): ?>
+                    <li><a href="settings.php" class="<?php echo basename($_SERVER['PHP_SELF']) === 'settings.php' ? 'active' : ''; ?>"><i class="fas fa-cog"></i> Settings</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </div>
@@ -377,23 +576,10 @@ body {
                     <!-- Contact Information Section -->
                     <div class="section-header">Contact Information</div>
                     <div class="form-row">
-                       <div class="form-group">
-    <label>Contact Number</label>
-    <div style="display: flex; align-items: center; gap: 5px;">
-        <span>+63</span>
-        <input 
-            type="text" 
-            name="contact_number" 
-            maxlength="10"
-            pattern="9[0-9]{9}" 
-            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-            placeholder="9XXXXXXXXX"
-            value="<?php echo htmlspecialchars($user['contact_number'] ?? ''); ?>"
-            required
-        >
-    </div>
-</div>
-
+                        <div class="form-group">
+                            <label>Contact number</label>
+                            <input type="text" name="contact_number" value="<?php echo htmlspecialchars($user['contact_number'] ?? ''); ?>">
+                        </div>
                         <div class="form-group">
                             <label>Address</label>
                             <input type="text" name="address" value="<?php echo htmlspecialchars($user['address'] ?? ''); ?>">
@@ -415,9 +601,35 @@ body {
                             </select>
                         </div>
                     </div>
-                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Civil status</label>
+                            <select name="civil_status">
+                                <option value="Single" <?php echo ($user['civil_status'] ?? '')=='Single'?'selected':''; ?>>Single</option>
+                                <option value="Married" <?php echo ($user['civil_status'] ?? '')=='Married'?'selected':''; ?>>Married</option>
+                                <option value="Widowed" <?php echo ($user['civil_status'] ?? '')=='Widowed'?'selected':''; ?>>Widowed</option>
+                            </select>
+                        </div>
+                    </div>
 
-                    
+                    <!-- Position Information Section -->
+                    <div class="section-header">Position Information</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Position</label>
+                            <input type="text" name="position" value="<?php echo htmlspecialchars($user['position'] ?? ''); ?>">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Start term</label>
+                            <input type="date" name="start_term" value="<?php echo htmlspecialchars($user['start_term'] ?? ''); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>End term</label>
+                            <input type="date" name="end_term" value="<?php echo htmlspecialchars($user['end_term'] ?? ''); ?>">
+                        </div>
+                    </div>
 
                     <div style="display:flex; gap:10px; margin-top:24px;">
                         <button type="reset" class="btn-update" style="background:#f5f5f5; color:#333; border:1px solid #e4e7ec;">Cancel</button>
@@ -487,6 +699,13 @@ function toggleTab(tabId) {
     // Show selected section and activate tab
     document.getElementById(tabId).style.display = 'block';
     event.target.classList.add('active');
+}
+
+function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.mobile-overlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('active');
 }
 
 // Show personal info by default
